@@ -1,0 +1,101 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { getTags, Tag } from "../libs/microcms";
+
+type FilterProps = {
+  tags?: Tag[];
+  onTagChange?: (selectedTags: string[]) => void;
+};
+
+export default function Filter({ tags = [], onTagChange }: FilterProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  // URLパラメータから選択されたタグを読み込み
+  useEffect(() => {
+    const tagsParam = searchParams.get('tags');
+    if (tagsParam) {
+      const tagsArray = tagsParam.split(',').filter(Boolean);
+      setSelectedTags(tagsArray);
+    }
+  }, [searchParams]);
+
+  // タグの選択状態が変更されたときの処理
+  const handleTagChange = (tagId: string, checked: boolean) => {
+    let newSelectedTags: string[];
+    
+    if (checked) {
+      newSelectedTags = [...selectedTags, tagId];
+    } else {
+      newSelectedTags = selectedTags.filter(id => id !== tagId);
+    }
+    
+    setSelectedTags(newSelectedTags);
+    
+    // URLパラメータを更新
+    if (newSelectedTags.length > 0) {
+      router.push(`/?tags=${newSelectedTags.join(',')}`);
+    } else {
+      router.push('/');
+    }
+
+    // 親コンポーネントに変更を通知
+    if (onTagChange) {
+      onTagChange(newSelectedTags);
+    }
+  };
+
+  // クリアボタンの処理
+  const handleClear = () => {
+    setSelectedTags([]);
+    router.push('/');
+    if (onTagChange) {
+      onTagChange([]);
+    }
+  };
+
+  return (
+    <div className="md:sticky md:top-[216px]">
+      <div className="flex items-center justify-between border-b">
+        <h3 className="text-sm">/ FILTER</h3>
+        {selectedTags.length > 0 && (
+          <button
+            onClick={handleClear}
+            className="text-sm px-2 focus:outline-none focus-visible:outline-2 focus-visible:outline-blue-500"
+          >
+            CLEAR
+          </button>
+        )}
+      </div>
+      <div className="space-y-3 py-4">
+        {tags.map((tag) => (
+          <label htmlFor={tag.id} key={tag.id} className="flex items-center space-x-2 cursor-pointer rounded p-1 -m-1">
+            <div className="relative">
+              <input
+                id={tag.id}
+                type="checkbox"
+                className="opacity-0 absolute w-4 h-4 peer focus:outline-none"
+                checked={selectedTags.includes(tag.id)}
+                onChange={(e) => handleTagChange(tag.id, e.target.checked)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleTagChange(tag.id, !selectedTags.includes(tag.id));
+                  }
+                }}
+              />
+              <div className="w-4 h-4 border border-black dark:border-white flex items-center justify-center peer-focus-visible:ring-2 peer-focus-visible:ring-black-500">
+                {selectedTags.includes(tag.id) && (
+                  <div className="w-2 h-2 bg-black dark:bg-white"></div>
+                )}
+              </div>
+            </div>
+            <span className="">{tag.title}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+  );
+}
