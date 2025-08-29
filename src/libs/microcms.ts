@@ -1,5 +1,12 @@
 import { createClient } from 'microcms-js-sdk';
 
+// タグの型定義
+export type Tag = {
+  id: string;
+  title: string;
+  slug: string;
+};
+
 // 環境変数にMICROCMS_SERVICE_DOMAINが設定されていない場合はエラーを投げる
 if (!process.env.MICROCMS_SERVICE_DOMAIN) {
   throw new Error('MICROCMS_SERVICE_DOMAIN is required');
@@ -15,3 +22,14 @@ export const client = createClient({
   serviceDomain: process.env.MICROCMS_SERVICE_DOMAIN,
   apiKey: process.env.MICROCMS_API_KEY,
 });
+
+// タグ一覧を取得する関数
+export async function getTags(): Promise<Tag[]> {
+  const data = await client.get({
+    endpoint: 'tags',
+    queries: {
+      fields: 'id,title,slug',
+    },
+  });
+  return data.contents;
+}
