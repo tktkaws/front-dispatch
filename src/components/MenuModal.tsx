@@ -44,11 +44,11 @@ export default function MenuModal({ onClose }: MenuModalProps) {
           </nav>
         </div>
         <div>
-          <p className="text-sm border-b mt-8">/ THEME</p>
+          <p className="font-ibmMono text-sm border-b mt-8">/ Theme</p>
           <div className="flex gap-8 my-4">
-            <button className="text-sm">LIGHT</button>
-            <button className="text-sm">DARK</button>
-            <button className="text-sm">SYSTEM</button>
+            <button className="font-ibmMono text-sm">LIGHT</button>
+            <button className="font-ibmMono text-sm">DARK</button>
+            <button className="font-ibmMono text-sm">SYSTEM</button>
           </div>
         </div>
         <button

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Red_Hat_Display, Noto_Sans_JP } from "next/font/google";
+import { Red_Hat_Display, Noto_Sans_JP, IBM_Plex_Sans_JP, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
 const redHatDisplay = Red_Hat_Display({
@@ -10,6 +10,18 @@ const redHatDisplay = Red_Hat_Display({
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
   variable: "--font-noto",
+});
+
+const ibmPlexSansJP = IBM_Plex_Sans_JP({
+  subsets: ["latin"],
+  variable: "--font-ibm-plex-sans-jp",
+  weight: ["400", "700"],
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-ibm-plex-mono",
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -23,9 +35,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ja" className="scroll-pt-[2rem]">
       <body 
-        className={`${redHatDisplay.variable} ${notoSansJP.variable} antialiased bg-[#F9F9F9]`}
+        className={`${ibmPlexMono.variable} ${ibmPlexSansJP.variable} font-ibmSans antialiased bg-[#F9F9F9]`}
       >
         {children}
       </body>

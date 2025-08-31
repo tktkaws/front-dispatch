@@ -50,11 +50,11 @@ export default function Aside() {
             <button onClick={() => setIsThemeOpen(!isThemeOpen)} className="p-2  bg-[#1E1E1E] text-[#E8E8E8] shadow-md">CONFIG</button>
             {isThemeOpen && (
               <div className="absolute right-0 mt-2 bg-[#1E1E1E] text-[#E8E8E8]  p-4 shadow-md">
-                <p className="text-sm border-b">/ THEME</p>
+                <p className="font-ibmMono text-sm border-b">/ Theme</p>
                 <div className="flex gap-8 my-4">
-                  <button className="text-sm">LIGHT</button>
-                  <button className="text-sm">DARK</button>
-                  <button className="text-sm">SYSTEM</button>
+                  <button className="font-ibmMono text-sm">LIGHT</button>
+                  <button className="font-ibmMono text-sm">DARK</button>
+                  <button className="font-ibmMono text-sm">SYSTEM</button>
                 </div>
               </div>
             )}
