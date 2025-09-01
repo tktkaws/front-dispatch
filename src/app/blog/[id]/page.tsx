@@ -34,10 +34,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
     <>
       <Header />
       <Aside />
-      <main className="max-w-full mx-auto md:grid md:grid-cols-[240px_1fr] xl:grid-cols-[320px_1fr] gap-8 px-4 md:px-8 mt-8 md:mt-[216px] min-h-[calc(100svh-216px-120px-32px)]">
+      <main className="max-w-full mx-auto md:grid md:grid-cols-[240px_1fr] xl:grid-cols-[320px_1fr] gap-8 px-4 md:px-8 mt-8 md:mt-[182px] min-h-[calc(100svh-216px-120px-32px)]">
         <div className="md:col-span-1 relative w-full">
           
-          <h3 className="font-mono text-sm border-b">/ Info</h3>
+          
+
+          {toc.length > 0 && (
+            <div className="md:sticky md:top-[182px]">
+              <h3 className="font-mono text-sm border-b">/ Info</h3>
             <div className="space-y-3 h-[8rem]">
               <dl className="pt-4 grid grid-cols-2 gap-x-4 gap-y-2 font-mono text-sm">
                 <dt className="">Date</dt>
@@ -54,7 +58,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                         <li key={tag.id} className="">
                           <Link
                             href={`/?tags=${tag.id}`}
-                            className="px-1 hover:underline"
+                            scroll={false}
+                            className="hover:underline"
                           >
                             {tag.title}
                           </Link>
@@ -65,9 +70,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
                 </dd>
               </dl>
             </div>
-
-          {toc.length > 0 && (
-            <div className="md:sticky md:top-[216px]">
               <nav className="mb-8 py-4">
                 <h2 className="font-mono text-sm border-b mb-3">/ Contents</h2>
                 <a href="#" className="text-sm mb-2 block hover:underline">
@@ -90,15 +92,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
             </div>
           )}
         </div>
-        <div className="md:col-span-1 w-full md:max-w-[calc(100vw-240px-96px)] xl:max-w-[1000px]">
+        <div className="md:col-span-1 w-full">
           <article>
             <p className="font-mono text-sm border-b">/ Title</p>
-          <h1 className="col-span-4 text-3xl font-bold h-[8rem] grid justify-start items-center">
+          <h1 className="col-span-4 text-3xl font-bold h-[8rem] grid justify-start items-center md:max-w-[calc(100vw-240px-96px)] xl:max-w-[1000px]">
             {post.title}
           </h1>
           <div className="mb-8 py-4">
             <h2 className="font-mono text-sm border-b">/ Article</h2>
-            <div className="prose pt-8 article-content" dangerouslySetInnerHTML={{ __html: post.body }} />
+            <div className="prose pt-8 article-content md:max-w-[calc(100vw-240px-96px)] xl:max-w-[1000px]" dangerouslySetInnerHTML={{ __html: post.body }} />
           </div>
           
             

@@ -41,7 +41,7 @@ export default async function Home({
     <>
       <Header />
       <Aside />
-      <main className="max-w-full mx-auto md:grid md:grid-cols-[240px_1fr] xl:grid-cols-[320px_1fr] gap-8 px-4 md:px-8 mt-8 md:mt-[216px] min-h-[calc(100svh-216px-120px-32px)]">
+      <main className="max-w-full mx-auto md:grid md:grid-cols-[240px_1fr] xl:grid-cols-[320px_1fr] gap-8 px-4 md:px-8 mt-8 md:mt-[182px] min-h-[calc(100svh-216px-120px-32px)]">
         <div className="md:col-span-1 relative">
           <Suspense fallback={<div>Loading...</div>}>
             <Filter tags={tags} />
