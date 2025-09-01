@@ -5,26 +5,12 @@ import Header from "@/components/Header";
 import Aside from "@/components/Aside";
 import Footer from "@/components/Footer";
 import Filter from "@/components/Filter";
-import FilteredArticles from "@/components/FilteredArticles";
-
-// タグの型定義
-type Tag = {
-  id: string;
-  title: string;
-  slug: string;
-};
-
-// ブログ記事の型定義
-type Props = {
-  id: string;
-  title: string;
-  body: string;
-  tags: Tag[];
-  updatedAt: string;
-};
+import Articles from "@/components/Articles";
+import type { Article } from "@/types/content";
+import { parseTags } from "@/libs/query";
 
 // microCMSからブログ記事を取得
-async function getBlogPosts(): Promise<Props[]> {
+async function getBlogPosts(): Promise<Article[]> {
   const data = await client.get({
     endpoint: "blogs",
     queries: {
@@ -43,12 +29,19 @@ export default async function Home({
   const posts = await getBlogPosts();
   const tags = await getTags();
   const resolvedSearchParams = await searchParams;
+  const selected = parseTags(resolvedSearchParams?.tags ?? null);
+  const filteredPosts =
+    selected.length === 0
+      ? posts
+      : posts.filter((post) =>
+          selected.every((tagId) => post.tags.some((tag) => tag.id === tagId))
+        );
 
   return (
     <>
       <Header />
       <Aside />
-      <main className="max-w-full mx-auto md:grid md:grid-cols-[240px_1fr] xl:grid-cols-[320px_1fr] gap-8 px-4 md:px-8 mt-8 md:mt-[216px] min-h-[calc(100svh-216px-120px-32px)]">
+      <main className="max-w-full mx-auto md:grid md:grid-cols-[240px_1fr] xl:grid-cols-[320px_1fr] gap-8 px-4 md:px-8 mt-8 md:mt-[182px] min-h-[calc(100svh-216px-120px-32px)]">
         <div className="md:col-span-1 relative">
           <Suspense fallback={<div>Loading...</div>}>
             <Filter tags={tags} />
@@ -56,14 +49,7 @@ export default async function Home({
         </div>
         <div className="md:col-span-1">
           <Suspense fallback={<div>Loading...</div>}>
-            <FilteredArticles
-              posts={posts}
-              selectedTags={
-                resolvedSearchParams?.tags
-                  ? resolvedSearchParams.tags.split(",")
-                  : []
-              }
-            />
+            <Articles posts={filteredPosts} />
           </Suspense>
         </div>
       </main>
