@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { getTags, Tag } from "../libs/microcms";
+import type { Tag } from "@/types/content";
+import { parseTags, setTags } from "@/libs/query";
 
 type FilterProps = {
   tags?: Tag[];
@@ -16,11 +17,8 @@ export default function Filter({ tags = [], onTagChange }: FilterProps) {
 
   // URLパラメータから選択されたタグを読み込み
   useEffect(() => {
-    const tagsParam = searchParams.get('tags');
-    if (tagsParam) {
-      const tagsArray = tagsParam.split(',').filter(Boolean);
-      setSelectedTags(tagsArray);
-    }
+    const tagsArray = parseTags(searchParams.get('tags'));
+    setSelectedTags(tagsArray);
   }, [searchParams]);
 
   // タグの選択状態が変更されたときの処理
@@ -35,12 +33,8 @@ export default function Filter({ tags = [], onTagChange }: FilterProps) {
     
     setSelectedTags(newSelectedTags);
     
-    // URLパラメータを更新
-    if (newSelectedTags.length > 0) {
-      router.push(`/?tags=${newSelectedTags.join(',')}`);
-    } else {
-      router.push('/');
-    }
+    // URLパラメータを更新（他クエリを保持）
+    router.replace(setTags(window.location.search, newSelectedTags));
 
     // 親コンポーネントに変更を通知
     if (onTagChange) {
@@ -51,7 +45,7 @@ export default function Filter({ tags = [], onTagChange }: FilterProps) {
   // クリアボタンの処理
   const handleClear = () => {
     setSelectedTags([]);
-    router.push('/');
+    router.replace(setTags(window.location.search, []));
     if (onTagChange) {
       onTagChange([]);
     }
