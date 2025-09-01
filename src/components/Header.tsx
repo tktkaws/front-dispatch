@@ -8,7 +8,7 @@ export default function Header() {
   const isAboutPage = pathname.includes("/about");
 
   return (
-    <header className="ml-4 md:ml-8 md:fixed md:top-0 md:w-[240px] xl:w-[320px] z-10  font-ibmMono bg-[#F9F9F9] pt-8 md:pt-8">
+    <header className="ml-4 md:ml-8 md:fixed md:top-0 md:w-[240px] xl:w-[320px] z-10  font-mono bg-[#F9F9F9] pt-8 md:pt-8">
       <h1 className="text-2xl leading-none">
         <Link href="/">
         [Front Dispatch]

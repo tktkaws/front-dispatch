@@ -45,7 +45,7 @@ export default function Articles({ posts }: ArticlesProps) {
 
   return (
     <>
-      <h2 className="font-ibmMono text-sm border-b">/ Articles</h2>
+      <h2 className="font-mono text-sm border-b">/ Articles</h2>
       <ul className="grid gap-4 pt-4 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3">
         {posts.map((post, index) => {
           const toc = renderToc(post.body);
@@ -70,7 +70,7 @@ export default function Articles({ posts }: ArticlesProps) {
                 {post.title}
               </Link>
               {toc.length > 0 && (
-                  <ul className="hidden md:block space-y-1 font-ibmMono text-sm mt-2 pr-2">
+                  <ul className="hidden md:block space-y-1 font-mono text-sm mt-2 pr-2">
                     {toc.slice(0, MAX_TOC_ITEMS).map((item, index) => (
                       <li
                         key={index}
@@ -87,7 +87,7 @@ export default function Articles({ posts }: ArticlesProps) {
                   </ul>
               )}
               {post.tags.length > 0 && (
-                <ul className="flex space-x-4 font-ibmMono text-sm">
+                <ul className="flex space-x-4 font-mono text-sm">
                       {post.tags.map((tag) => (
                         <li
                           key={tag.id}

@@ -54,17 +54,17 @@ export default function Filter({ tags = [], onTagChange }: FilterProps) {
   return (
     <div className="md:sticky md:top-[216px]">
       <div className="flex items-center justify-between border-b">
-        <h3 className="font-ibmMono text-sm">/ Filter</h3>
+        <h3 className="font-mono text-sm">/ Filter</h3>
         {selectedTags.length > 0 && (
           <button
             onClick={handleClear}
-            className="font-ibmMono text-sm px-2 focus:outline-none focus-visible:outline-2 focus-visible:outline-blue-500"
+            className="font-mono text-sm px-2 focus:outline-none focus-visible:outline-2 focus-visible:outline-blue-500"
           >
             Clear
           </button>
         )}
       </div>
-      <div className="space-y-3 py-4 font-ibmMono">
+      <div className="space-y-3 py-4 font-mono">
         {tags.map((tag) => (
           <label htmlFor={tag.id} key={tag.id} className="flex items-center space-x-2 cursor-pointer rounded p-1 -m-1">
             <div className="relative">

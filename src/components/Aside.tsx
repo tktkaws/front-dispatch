@@ -47,14 +47,14 @@ export default function Aside() {
     <>
       <aside className="">
           <div className="hidden md:block md:fixed md:top-0 md:right-0 m-8" ref={themeRef}>
-            <button onClick={() => setIsThemeOpen(!isThemeOpen)} className="p-2  bg-[#1E1E1E] text-[#E8E8E8] shadow-md">CONFIG</button>
+            <button onClick={() => setIsThemeOpen(!isThemeOpen)} className="p-2  bg-[#1E1E1E] text-[#E8E8E8] shadow-md">Config</button>
             {isThemeOpen && (
               <div className="absolute right-0 mt-2 bg-[#1E1E1E] text-[#E8E8E8]  p-4 shadow-md">
-                <p className="font-ibmMono text-sm border-b">/ Theme</p>
+                <p className="font-mono text-sm border-b">/ Theme</p>
                 <div className="flex gap-8 my-4">
-                  <button className="font-ibmMono text-sm">LIGHT</button>
-                  <button className="font-ibmMono text-sm">DARK</button>
-                  <button className="font-ibmMono text-sm">SYSTEM</button>
+                  <button className="font-mono text-sm">Light</button>
+                  <button className="font-mono text-sm">Dark</button>
+                  <button className="font-mono text-sm">System</button>
                 </div>
               </div>
             )}
