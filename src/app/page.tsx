@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Aside from "@/components/Aside";
 import Footer from "@/components/Footer";
 import Filter from "@/components/Filter";
-import FilteredArticles from "@/components/FilteredArticles";
+import Articles from "@/components/Articles";
 import type { Article } from "@/types/content";
 import { parseTags } from "@/libs/query";
 
@@ -29,6 +29,13 @@ export default async function Home({
   const posts = await getBlogPosts();
   const tags = await getTags();
   const resolvedSearchParams = await searchParams;
+  const selected = parseTags(resolvedSearchParams?.tags ?? null);
+  const filteredPosts =
+    selected.length === 0
+      ? posts
+      : posts.filter((post) =>
+          selected.every((tagId) => post.tags.some((tag) => tag.id === tagId))
+        );
 
   return (
     <>
@@ -42,14 +49,7 @@ export default async function Home({
         </div>
         <div className="md:col-span-1">
           <Suspense fallback={<div>Loading...</div>}>
-            <FilteredArticles
-              posts={posts}
-              selectedTags={
-                resolvedSearchParams?.tags
-                  ? resolvedSearchParams.tags.split(",")
-                  : []
-              }
-            />
+            <Articles posts={filteredPosts} />
           </Suspense>
         </div>
       </main>

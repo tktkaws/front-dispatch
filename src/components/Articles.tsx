@@ -3,25 +3,12 @@
 import Link from "next/link";
 import { renderToc } from '@/libs/renderToc';
 import { useState, useEffect } from "react";
+import type { Article } from "@/types/content";
 
 // 設定: トップページで表示する目次の最大項目数
 const MAX_TOC_ITEMS = 5;
 
-// タグの型定義
-type Tag = {
-  id: string;
-  title: string;
-  slug: string;
-};
-
-// ブログ記事の型定義
-type Article = {
-  id: string;
-  title: string;
-  body: string;
-  tags: Tag[];
-  updatedAt: string;
-};
+// 型は共通typesから参照
 
 type ArticlesProps = {
   posts: Article[];
