@@ -6,25 +6,11 @@ import Aside from "@/components/Aside";
 import Footer from "@/components/Footer";
 import Filter from "@/components/Filter";
 import FilteredArticles from "@/components/FilteredArticles";
-
-// タグの型定義
-type Tag = {
-  id: string;
-  title: string;
-  slug: string;
-};
-
-// ブログ記事の型定義
-type Props = {
-  id: string;
-  title: string;
-  body: string;
-  tags: Tag[];
-  updatedAt: string;
-};
+import type { Article } from "@/types/content";
+import { parseTags } from "@/libs/query";
 
 // microCMSからブログ記事を取得
-async function getBlogPosts(): Promise<Props[]> {
+async function getBlogPosts(): Promise<Article[]> {
   const data = await client.get({
     endpoint: "blogs",
     queries: {

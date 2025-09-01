@@ -6,24 +6,10 @@ import Header from "@/components/Header";
 import Aside from "@/components/Aside";
 import Footer from "@/components/Footer";
 import dayjs from 'dayjs';
-
-// ブログ記事の型定義
-type Tag = {
-  id: string;
-  title: string;
-  slug: string;
-};
-
-type Props = {
-  id: string;
-  title: string;
-  body: string;
-  updatedAt: string;
-  tags: Tag[];
-};
+import type { Article } from "@/types/content";
 
 // microCMSから特定の記事を取得
-async function getBlogPost(id: string): Promise<Props> {
+async function getBlogPost(id: string): Promise<Article> {
   const data = await client.get({
     endpoint: `blogs/${id}`,
   });
