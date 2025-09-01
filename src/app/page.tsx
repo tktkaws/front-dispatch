@@ -38,7 +38,7 @@ async function getBlogPosts(): Promise<Props[]> {
 export default async function Home({
   searchParams,
 }: {
-  searchParams?: { tags?: string };
+  searchParams?: Promise<{ tags?: string }>;
 }) {
   const posts = await getBlogPosts();
   const tags = await getTags();
