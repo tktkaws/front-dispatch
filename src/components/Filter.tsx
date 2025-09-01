@@ -34,7 +34,7 @@ export default function Filter({ tags = [], onTagChange }: FilterProps) {
     setSelectedTags(newSelectedTags);
     
     // URLパラメータを更新（他クエリを保持）
-    router.replace(setTags(window.location.search, newSelectedTags));
+    router.replace(setTags(window.location.search, newSelectedTags), { scroll: false });
 
     // 親コンポーネントに変更を通知
     if (onTagChange) {
@@ -45,14 +45,14 @@ export default function Filter({ tags = [], onTagChange }: FilterProps) {
   // クリアボタンの処理
   const handleClear = () => {
     setSelectedTags([]);
-    router.replace(setTags(window.location.search, []));
+    router.replace(setTags(window.location.search, []), { scroll: false });
     if (onTagChange) {
       onTagChange([]);
     }
   };
 
   return (
-    <div className="md:sticky md:top-[216px]">
+    <div className="md:sticky md:top-[182px]">
       <div className="flex items-center justify-between border-b">
         <h3 className="font-mono text-sm">/ Filter</h3>
         {selectedTags.length > 0 && (

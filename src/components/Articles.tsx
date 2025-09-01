@@ -95,6 +95,7 @@ export default function Articles({ posts }: ArticlesProps) {
                         >
                           <Link
                             href={`/?tags=${tag.id}`}
+                            scroll={false}
                             className="hover:underline"
                           >
                             {tag.title}
