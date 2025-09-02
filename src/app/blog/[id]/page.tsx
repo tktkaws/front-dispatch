@@ -7,6 +7,7 @@ import Aside from "@/components/Aside";
 import Footer from "@/components/Footer";
 import dayjs from 'dayjs';
 import type { Article } from "@/types/content";
+import { highlightArticle } from "@/libs/highlight-article";
 
 // microCMSから特定の記事を取得
 async function getBlogPost(id: string): Promise<Article> {
@@ -28,7 +29,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
   const textContent = post.body.replace(/<[^>]*>/g, '');
   const characterCount = textContent.length;
 
-  const toc = renderToc(post.body);
+  const highlightedBody = await highlightArticle(post.body);
+  const toc = renderToc(highlightedBody);
 
   return (
     <>
@@ -100,7 +102,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
           </h1>
           <div className="mb-8 py-4">
             <h2 className="font-mono text-sm border-b">/ Article</h2>
-            <div className="prose pt-8 article-content md:max-w-[calc(100vw-240px-96px)] xl:max-w-[1000px]" dangerouslySetInnerHTML={{ __html: post.body }} />
+            <div className="prose pt-8 article-content md:max-w-[calc(100vw-240px-96px)] xl:max-w-[1000px]" dangerouslySetInnerHTML={{ __html: highlightedBody }} />
           </div>
           
             

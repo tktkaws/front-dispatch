@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #F9F9F9;
   --foreground: #171717;
 }
 
@@ -105,6 +105,11 @@ body {
 .link-underline:hover::before {
   transform: scaleX(1);
 }
+
+/* Shiki theme switching (light/dark) */
+.codegroup .shiki-dark { display: none; }
+html.dark .codegroup .shiki-light { display: none; }
+html.dark .codegroup .shiki-dark { display: block; }
 
 @media (prefers-color-scheme: dark) {
   .article-content h2 {
