@@ -1,4 +1,3 @@
-// app/page.tsx
 import { Suspense } from "react";
 import { client, getTags } from "@/libs/microcms";
 import Header from "@/components/Header";
@@ -9,7 +8,6 @@ import Articles from "@/components/Articles";
 import type { Article } from "@/types/content";
 import { parseTags } from "@/libs/query";
 
-// microCMSからブログ記事を取得
 async function getBlogPosts(): Promise<Article[]> {
   const data = await client.get({
     endpoint: "blogs",

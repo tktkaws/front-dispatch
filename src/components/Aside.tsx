@@ -3,6 +3,7 @@
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "motion/react"
 import { useState, useRef, useEffect } from "react";
 import MenuModal from "./MenuModal";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 export default function Aside() {
   const { scrollY } = useScroll();
@@ -45,17 +46,13 @@ export default function Aside() {
 
   return (
     <>
-      <aside className="">
+      <aside className="font-mono">
           <div className="hidden md:block md:fixed md:top-0 md:right-0 m-8" ref={themeRef}>
-            <button onClick={() => setIsThemeOpen(!isThemeOpen)} className="p-2  bg-[#1E1E1E] text-[#E8E8E8] shadow-md">Config</button>
+            <button onClick={() => setIsThemeOpen(!isThemeOpen)} className="p-2 bg-[var(--background)] text-[var(--foreground)] border border-[var(--foreground)] shadow-sm">Config</button>
             {isThemeOpen && (
-              <div className="absolute right-0 mt-2 bg-[#1E1E1E] text-[#E8E8E8]  p-4 shadow-md">
+              <div className="absolute right-0 mt-2 bg-[var(--background)] text-[var(--foreground)] border p-4 border-[var(--foreground)] shadow-sm">
                 <p className="font-mono text-sm border-b">/ Theme</p>
-                <div className="flex gap-8 my-4">
-                  <button className="font-mono text-sm">Light</button>
-                  <button className="font-mono text-sm">Dark</button>
-                  <button className="font-mono text-sm">System</button>
-                </div>
+                <ThemeSwitcher />
               </div>
             )}
           </div>
@@ -65,10 +62,10 @@ export default function Aside() {
           initial="hidden"
           animate={isHidden ? "hidden" : "visible"}
           transition={{ duration: 0.3 }}
-          className="p-2 bg-[#1E1E1E] text-[#E8E8E8] shadow-md"
+          className="p-2 bg-[var(--background)] text-[var(--foreground)] border border-[var(--foreground)] shadow-md"
           onClick={openModal}
         >
-          MENU
+          Menu
         </motion.button>
       </div>
         </aside>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans_JP, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/app/theme-provider";
 
 const ibmPlexSansJP = IBM_Plex_Sans_JP({
   subsets: ["latin"],
@@ -25,11 +26,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className="scroll-pt-[2rem]">
-      <body 
-        className={`${ibmPlexMono.variable} ${ibmPlexSansJP.variable} font-sans antialiased bg-[#F9F9F9]`}
+    <html lang="ja" className="scroll-pt-[2rem]" suppressHydrationWarning>
+      <body
+        className={`${ibmPlexMono.variable} ${ibmPlexSansJP.variable} font-sans antialiased bg-[var(--background)] text-[var(--foreground)]`}
       >
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

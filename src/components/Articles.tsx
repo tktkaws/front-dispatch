@@ -45,13 +45,13 @@ export default function Articles({ posts }: ArticlesProps) {
 
   return (
     <>
-      <h2 className="font-mono text-sm border-b">/ Articles</h2>
+      <h2 className="font-mono text-sm border-b border-[var(--foreground)]">/ Articles</h2>
       <ul className="grid gap-4 pt-4 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3">
         {posts.map((post, index) => {
           const toc = renderToc(post.body);
           
           const totalPosts = posts.length;
-          let className = "border-b py-4 md:p-4 grid gap-4";
+          let className = "border-b border-[var(--foreground)] py-4 md:p-4 grid gap-4";
 
           if (isClient) {
             const isLastRow = Math.floor(index / columnCount) === Math.floor((totalPosts - 1) / columnCount);
@@ -91,7 +91,7 @@ export default function Articles({ posts }: ArticlesProps) {
                       {post.tags.map((tag) => (
                         <li
                           key={tag.id}
-                          className="border border-solid p-1 leading-none h-fit w-fit"
+                          className="border border-[var(--foreground)] p-1 leading-none h-fit w-fit"
                         >
                           <Link
                             href={`/?tags=${tag.id}`}

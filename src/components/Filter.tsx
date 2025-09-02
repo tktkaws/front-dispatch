@@ -53,7 +53,7 @@ export default function Filter({ tags = [], onTagChange }: FilterProps) {
 
   return (
     <div className="md:sticky md:top-[182px]">
-      <div className="flex items-center justify-between border-b">
+      <div className="flex items-center justify-between border-b border-[var(--foreground)]">
         <h3 className="font-mono text-sm">/ Filter</h3>
         {selectedTags.length > 0 && (
           <button
@@ -80,9 +80,9 @@ export default function Filter({ tags = [], onTagChange }: FilterProps) {
                   }
                 }}
               />
-              <div className="w-3 h-3 border border-black dark:border-white flex items-center justify-center peer-focus-visible:ring-2 peer-focus-visible:ring-black-500">
+              <div className="w-3 h-3 border border-[var(--foreground)] flex items-center justify-center peer-focus-visible:ring-2 peer-focus-visible:ring-[var(--foreground)]/50">
                 {selectedTags.includes(tag.id) && (
-                  <div className="w-3 h-3 bg-black dark:bg-white"></div>
+                  <div className="w-3 h-3 bg-[var(--foreground)]"></div>
                 )}
               </div>
             </div>
