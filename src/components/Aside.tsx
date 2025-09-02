@@ -1,10 +1,12 @@
 "use client";
 
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "motion/react"
+import { useTheme } from "next-themes";
 import { useState, useRef, useEffect } from "react";
 import MenuModal from "./MenuModal";
 
 export default function Aside() {
+  const { setTheme, theme, systemTheme } = useTheme();
   const { scrollY } = useScroll();
   const [isHidden, setIsHidden] = useState(true);
   const [lastY, setLastY] = useState(0);
@@ -49,13 +51,14 @@ export default function Aside() {
           <div className="hidden md:block md:fixed md:top-0 md:right-0 m-8" ref={themeRef}>
             <button onClick={() => setIsThemeOpen(!isThemeOpen)} className="p-2  bg-[#1E1E1E] text-[#E8E8E8] shadow-md">Config</button>
             {isThemeOpen && (
-              <div className="absolute right-0 mt-2 bg-[#1E1E1E] text-[#E8E8E8]  p-4 shadow-md">
+              <div className="absolute right-0 mt-2 bg-[var(--background)] text-[var(--foreground)] border border-[var(--foreground)]/10 p-4 shadow-md">
                 <p className="font-mono text-sm border-b">/ Theme</p>
                 <div className="flex gap-8 my-4">
-                  <button className="font-mono text-sm">Light</button>
-                  <button className="font-mono text-sm">Dark</button>
-                  <button className="font-mono text-sm">System</button>
+                  <button onClick={() => setTheme("light")} className="font-mono text-sm underline-offset-4 hover:underline">Light</button>
+                  <button onClick={() => setTheme("dark")} className="font-mono text-sm underline-offset-4 hover:underline">Dark</button>
+                  <button onClick={() => setTheme("system")} className="font-mono text-sm underline-offset-4 hover:underline">System</button>
                 </div>
+                <p className="sr-only">theme: {theme} system: {String(systemTheme)}</p>
               </div>
             )}
           </div>
@@ -65,10 +68,10 @@ export default function Aside() {
           initial="hidden"
           animate={isHidden ? "hidden" : "visible"}
           transition={{ duration: 0.3 }}
-          className="p-2 bg-[#1E1E1E] text-[#E8E8E8] shadow-md"
+          className="p-2 bg-[var(--background)] text-[var(--foreground)] border border-[var(--foreground)]/10 shadow-md"
           onClick={openModal}
         >
-          MENU
+          Menu
         </motion.button>
       </div>
         </aside>

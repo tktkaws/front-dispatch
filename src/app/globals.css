@@ -5,6 +5,12 @@
   --foreground: #171717;
 }
 
+/* next-themes が付与する .dark クラスで上書き */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -12,8 +18,9 @@
   --font-mono: var(--font-ibm-plex-mono);
 }
 
+/* OSダーク設定時のフォールバック（.dark がない場合） */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not(.dark) {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
@@ -21,6 +28,7 @@
 
 body {
   color: var(--foreground);
+  background: var(--background);
 }
 
 /* GitHub-like styles for article content */
