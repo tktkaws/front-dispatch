@@ -1,9 +1,9 @@
-import { getHighlighter } from "shiki";
+import { getHighlighter, type BundledHighlighterOptions, type BundledLanguage, type BundledTheme } from "shiki";
 
 let highlighterPromise: ReturnType<typeof getHighlighter> | null = null;
 
-const THEMES = ["github-light", "github-dark"] as const;
-const LANGS = [
+const THEMES: BundledTheme[] = ["github-light", "github-dark"];
+const LANGS: BundledLanguage[] = [
   "ts",
   "tsx",
   "js",
@@ -13,16 +13,18 @@ const LANGS = [
   "scss",
   "html",
   "bash",
-  "sh",
   "md",
   "markdown",
   "yaml",
-  "yml",
-] as const;
+];
 
 export async function getHL() {
   if (!highlighterPromise) {
-    highlighterPromise = getHighlighter({ themes: THEMES as any, langs: LANGS as any });
+    const options = { themes: THEMES, langs: LANGS } satisfies BundledHighlighterOptions<
+      BundledLanguage,
+      BundledTheme
+    >;
+    highlighterPromise = getHighlighter(options);
   }
   return highlighterPromise;
 }
