@@ -15,7 +15,7 @@ export default function ThemeSwitcher({ orientation = "row", size = "sm" }: Them
   const isActive = (name: "light" | "dark" | "system") => theme === name ? " underline" : "";
 
   return (
-    <div className={`${stack} my-2`}>
+    <div className={`${stack} mt-4`}>
       <button onClick={() => setTheme("light")} className={baseBtn + isActive("light")}>Light</button>
       <button onClick={() => setTheme("dark")} className={baseBtn + isActive("dark")}>Dark</button>
       <button onClick={() => setTheme("system")} className={baseBtn + isActive("system")}>System</button>

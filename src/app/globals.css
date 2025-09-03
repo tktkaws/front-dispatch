@@ -3,12 +3,16 @@
 :root {
   --background: #F9F9F9;
   --foreground: #171717;
+  /* テーマ依存のアイコン色（既定は前景色） */
+  --icon: var(--foreground);
 }
 
 /* next-themes が付与する .dark クラスで上書き */
 .dark {
   --background: #222222;
   --foreground: #ededed;
+  /* ダーク時に背景と同じ色を使いたい場合 */
+  --icon: var(--background);
 }
 
 @theme inline {
@@ -23,6 +27,7 @@
   :root:not(.dark) {
     --background: #222222;
     --foreground: #ededed;
+    --icon: var(--foreground);
   }
 }
 
@@ -33,11 +38,17 @@ body {
 
 /* GitHub-like styles for article content */
 .article-content h2 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
   margin: 2rem 0 1rem 0;
   padding-bottom: 0.5rem;
   line-height: 1.25;
+}
+
+@media (min-width: 1024px) {
+  .article-content h2 {
+    font-size: 1.5rem;
+  }
 }
 
 .article-content ul {
@@ -65,6 +76,7 @@ body {
   font-size: 0.875rem;
   line-height: 1.45;
 }
+
 .dark .article-content pre {
   background-color: #1d1c1c;
 }
@@ -107,20 +119,28 @@ body {
 }
 
 /* Shiki theme switching (light/dark) */
-.codegroup .shiki-dark { display: none; }
-html.dark .codegroup .shiki-light { display: none; }
-html.dark .codegroup .shiki-dark { display: block; }
+.codegroup .shiki-dark {
+  display: none;
+}
+
+html.dark .codegroup .shiki-light {
+  display: none;
+}
+
+html.dark .codegroup .shiki-dark {
+  display: block;
+}
 
 @media (prefers-color-scheme: dark) {
   .article-content h2 {
     border-bottom-color: #30363d;
   }
-  
+
   .article-content pre {
     background-color: #161b22;
     border-color: #30363d;
   }
-  
+
   .article-content code {
     background-color: rgba(110, 118, 129, 0.4);
   }
