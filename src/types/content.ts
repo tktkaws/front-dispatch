@@ -12,3 +12,17 @@ export type Article = {
   updatedAt: string;
 };
 
+export type AboutInfo = {
+  fieldId: 'info';
+  title: string;
+  desc: string;
+};
+
+export type About = {
+  id: string;
+  title: string;
+  body: string;
+  info_repeat: AboutInfo[];
+  updatedAt?: string;
+  createdAt?: string;
+};
