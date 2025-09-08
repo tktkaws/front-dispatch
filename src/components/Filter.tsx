@@ -6,7 +6,7 @@ import type { Tag } from "@/types/content";
 import { parseTags, setTags } from "@/libs/query";
 
 type FilterProps = {
-  tags?: Tag[];
+  tags?: (Tag & { count?: number })[];
   onTagChange?: (selectedTags: string[]) => void;
 };
 
@@ -86,7 +86,12 @@ export default function Filter({ tags = [], onTagChange }: FilterProps) {
                 )}
               </div>
             </div>
-            <span className="">{tag.title}</span>
+            <span className="relative inline-block">
+              {tag.title}
+              <span className="pl-1 text-sm">
+                {typeof tag.count === 'number' ? `(${tag.count})` : ''}
+              </span>
+            </span>
           </label>
         ))}
       </div>
