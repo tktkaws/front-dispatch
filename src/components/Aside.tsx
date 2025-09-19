@@ -1,31 +1,18 @@
 "use client";
 
-import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "motion/react"
+import { AnimatePresence, motion } from "motion/react";
 import { useState, useRef, useEffect } from "react";
 import MenuModal from "./MenuModal";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 export default function Aside() {
-  const { scrollY } = useScroll();
-  const [isHidden, setIsHidden] = useState(true);
-  const [lastY, setLastY] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isThemeOpen, setIsThemeOpen] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const themeRef = useRef<HTMLDivElement>(null);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const isScrollingUp = latest < lastY;
-    
-    if (isScrollingUp && latest > 0) {
-      setIsHidden(false);
-    } else {
-      setIsHidden(true);
-    }
-    setLastY(latest);
-  });
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -39,10 +26,27 @@ export default function Aside() {
     };
   }, [themeRef]);
 
-  const variants = {
-    hidden: { opacity: 0, y: 0 },
-    visible: { opacity: 1, y: 0 },
-  };
+  // ヘッダーの可視状態を監視し、見えなくなったらモバイルメニューを表示
+  useEffect(() => {
+    const header = document.getElementById("global-header");
+    if (!header) {
+      // ヘッダーが見つからない場合は常に表示
+      setShowMobileMenu(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // ヘッダーが可視でないときに表示
+        setShowMobileMenu(!entry.isIntersecting);
+      },
+      { root: null, threshold: 0 }
+    );
+    observer.observe(header);
+
+    return () => observer.disconnect();
+  }, []);
+
 
   return (
     <>
@@ -56,18 +60,25 @@ export default function Aside() {
               </div>
             )}
           </div>
-        <div className="md:hidden fixed bottom-0 right-0 m-8">
-        <motion.button
-          variants={variants}
-          initial="hidden"
-          animate={isHidden ? "hidden" : "visible"}
-          transition={{ duration: 0.3 }}
-          className="p-2 bg-[var(--background)] text-[var(--foreground)] border border-[var(--foreground)] shadow-md"
-          onClick={openModal}
-        >
-          Menu
-        </motion.button>
-      </div>
+        <AnimatePresence>
+          {showMobileMenu && (
+            <motion.div
+              key="mobile-menu-button"
+              className="md:hidden fixed bottom-8 left-1/2 -translate-x-1/2 transform"
+              initial={{ opacity: 0, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 0 }}
+              transition={{ duration: 0.2 }}
+           >
+              <button
+                className="p-2 bg-[var(--background)] text-[var(--foreground)] border border-[var(--foreground)] shadow-md"
+                onClick={openModal}
+              >
+                Menu
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
         </aside>
       <AnimatePresence>
         {isModalOpen && <MenuModal onClose={closeModal} />}
